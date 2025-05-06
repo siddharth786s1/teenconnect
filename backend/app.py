@@ -8,10 +8,12 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 from datetime import datetime, timedelta  # Added timedelta
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity  # Added JWT imports
+from flask_cors import CORS  # Import CORS
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})  # Enable CORS for /api routes from frontend origin
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your_super_secret_key_here')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///teenconnect.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -51,6 +53,50 @@ class WellnessData(db.Model):
     heart_rate = db.Column(db.Integer, nullable=True)  # Optional
 
     user = db.relationship('User', backref=db.backref('wellness_data', lazy=True))
+
+def ensure_dev_user(flask_app_instance):
+    with flask_app_instance.app_context():
+        dev_username = "devuser"
+        dev_user_email = "dev@example.com"
+        dev_password = "devpassword"
+
+        # Check if user with this email already exists
+        user_by_email = User.query.filter_by(email=dev_user_email).first()
+        if user_by_email:
+            print(f"User with email '{dev_user_email}' (username: '{user_by_email.username}') already exists. Skipping dev user creation.")
+            # You could uncomment the lines below to reset the password for an existing dev user
+            # print(f"Attempting to reset password for existing dev user '{user_by_email.username}' to '{dev_password}'.")
+            # user_by_email.set_password(dev_password)
+            # try:
+            #     db.session.commit()
+            #     print(f"Password for existing dev user '{user_by_email.username}' has been reset.")
+            # except Exception as e:
+            #     db.session.rollback()
+            #     print(f"Error resetting password for dev user '{user_by_email.username}': {e}")
+            return
+
+        # Check if user with this username already exists (in case email is different but username is taken)
+        user_by_username = User.query.filter_by(username=dev_username).first()
+        if user_by_username:
+            print(f"User with username '{dev_username}' (email: '{user_by_username.email}') already exists. Cannot create new dev user with this username. Skipping dev user creation.")
+            return
+
+        print(f"Creating development user: Username='{dev_username}', Email='{dev_user_email}'")
+        new_user = User(username=dev_username, email=dev_user_email)
+        new_user.set_password(dev_password)
+        db.session.add(new_user)
+        try:
+            db.session.commit()
+            print(f"Development user '{dev_username}' created successfully with password '{dev_password}'.")
+            print("You can now log in using the identifier '{dev_username}' or '{dev_user_email}' and password '{dev_password}'.")
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error creating development user '{dev_username}': {e}")
+            print("Please ensure your database is initialized and migrated correctly (e.g., run 'flask db upgrade' in the backend directory).")
+
+# Call the function to ensure the dev user exists.
+# This is placed here so 'app', 'db', and 'User' class are defined.
+# ensure_dev_user(app) # Temporarily commented out to allow migrations to run first
 
 # --- Authentication API Endpoints ---
 @app.route('/api/register', methods=['POST'])
