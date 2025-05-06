@@ -1,0 +1,179 @@
+\
+/* Styles for HomePage.jsx */
+.home-page-container {
+  padding: 0 1rem; /* Add some padding on smaller screens */
+}
+
+.home-hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: #f0f8ff; /* Light AliceBlue background */
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.home-hero h1 {
+  font-size: 2.8rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.home-subtitle {
+  font-size: 1.3rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.home-hero p:not(.home-subtitle) {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
+  line-height: 1.6;
+}
+
+.home-cta-buttons {
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.8rem 1.8rem;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+  border: 2px solid #3498db;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #3498db;
+  border: 2px solid #3498db;
+}
+
+.btn-secondary:hover {
+  background-color: #3498db;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.home-features {
+  text-align: center;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+}
+
+.home-features h2 {
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.feature-item {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.feature-item h3 {
+  font-size: 1.4rem;
+  color: #3498db;
+  margin-bottom: 0.75rem;
+}
+
+.feature-item p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.learn-more-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.learn-more-link:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+.home-testimonial {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.home-testimonial h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.quote {
+  font-size: 1.1rem;
+  color: #555;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .home-hero h1 {
+    font-size: 2.2rem;
+  }
+  .home-subtitle {
+    font-size: 1.1rem;
+  }
+  .home-hero p:not(.home-subtitle) {
+    font-size: 1rem;
+  }
+  .home-features h2 {
+    font-size: 1.8rem;
+  }
+  .feature-item h3 {
+    font-size: 1.2rem;
+  }
+  .feature-item p {
+    font-size: 0.9rem;
+  }
+  .home-testimonial h2 {
+    font-size: 1.6rem;
+  }
+  .quote {
+    font-size: 1rem;
+  }
+  .btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}

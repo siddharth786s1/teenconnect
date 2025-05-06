@@ -1,14 +1,40 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function RegisterPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState(''); // For displaying messages to the user
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implement registration logic
-    console.log('Register attempt with:', { username, email, password });
+    setMessage(''); // Clear previous messages
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Registration successful! Redirecting to login...');
+        setTimeout(() => {
+          navigate('/login'); // Redirect to login page
+        }, 2000);
+      } else {
+        setMessage(data.message || 'Registration failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setMessage('An error occurred during registration. Please try again later.');
+    }
   };
 
   return (
@@ -29,6 +55,7 @@ function RegisterPage() {
         </div>
         <button type="submit">Register</button>
       </form>
+      {message && <p>{message}</p>}
     </div>
   );
 }
