@@ -1,0 +1,40 @@
+.navbar {
+  background-color: #3498db; /* Brighter, more engaging blue */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-logo {
+  color: white;
+  text-decoration: none;
+  font-size: 1.8rem; /* Larger logo */
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin-left: 25px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem; /* Slightly larger nav links */
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: #2980b9; /* Darker blue on hover/active */
+}
